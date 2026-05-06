@@ -1,15 +1,6 @@
 interface Env {
   CONTACT_EMAIL: string;
-  MAILCHANNELS_API_KEY?: string;
-}
-
-function getCorsHeaders(request: Request) {
-  const origin = request.headers.get("Origin") ?? "";
-  const allowed = origin.endsWith(".pages.dev") || origin === "https://pong-photo.pages.dev";
-  return {
-    "Access-Control-Allow-Origin": allowed ? origin : "https://pong-photo.pages.dev",
-    "Content-Type": "application/json",
-  };
+  RESEND_API_KEY: string;
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
@@ -30,42 +21,31 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       return Response.json({ error: "Invalid email address." }, { status: 400, headers });
     }
 
-    await fetch("https://api.mailchannels.net/tx/v1/send", {
+    const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Authorization": `Bearer ${context.env.RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        personalizations: [{
-          to: [{ email: context.env.CONTACT_EMAIL }],
-        }],
-        from: {
-          email: "no-reply@pong-photo.pages.dev",
-          name: "Pong Photo Contact Form",
-        },
-        reply_to: { email, name },
+        from: "Pong Photo Contact <onboarding@resend.dev>",
+        to: [context.env.CONTACT_EMAIL],
+        reply_to: email,
         subject: `New session inquiry from ${name}`,
-        content: [{
-          type: "text/plain",
-          value: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-        }],
+        text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
       }),
     });
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error("Resend error:", err);
+      return Response.json({ error: "Failed to send message." }, { status: 500, headers });
+    }
 
     return Response.json({ success: true }, { status: 200, headers });
 
   } catch (err) {
-    console.error(err);
+    console.error("Function error:", err);
     return Response.json({ error: "Something went wrong. Please try again." }, { status: 500, headers });
   }
-};
-
-export const onRequestOptions: PagesFunction = async (context) => {
-  const origin = context.request.headers.get("Origin") ?? "";
-  const allowed = origin.endsWith(".pages.dev") || origin === "https://pong-photo.pages.dev";
-  return new Response(null, {
-    headers: {
-      "Access-Control-Allow-Origin": allowed ? origin : "https://pong-photo.pages.dev",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  });
 };
