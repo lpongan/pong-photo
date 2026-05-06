@@ -3,11 +3,22 @@ title: "About"
 description: "We're a father-and-son portrait team based in [your area], specializing in alternative families, action sports, cosplay, and kids who don't fit the mold."
 layout: "../layouts/BaseLayout.astro"
 ---
+import PortfolioMasonry from "../components/PortfolioMasonry.astro";
+
+export const thisisus = [
+  { src: 'https://res.cloudinary.com/dvwl2ci5j/image/upload/v1778088495/IMG_0783_fe5fgz.jpg', alt: 'Leo kayaking Waterton canyon CO' },
+  { src: 'https://res.cloudinary.com/dvwl2ci5j/image/upload/v1778088495/Len_s_Visit_062_qxluxl.jpg', alt: 'Leo Climbing at Penitente canyon' },
+  { src: 'https://res.cloudinary.com/dvwl2ci5j/image/upload/v1778089121/DSC08341_gwdopo.jpg', alt: 'Violet racing at Hershey' },
+];
+
+<div class="flex flex-col gap-12 max-w-2xl">
 
 # We're not your typical portrait studio.
 # Honestly, we're not typical much of anything.
 
 ## Who we are
+
+<PortfolioMasonry images={thisisus} />
 
 We're a father-and-son team based in chester county pa. Photography came first
 for me — tech came later. After years behind a camera, a long detour
@@ -61,3 +72,5 @@ photo that couldn't be of anyone else.
 Low pressure. No posing instructions that make people feel like they're
 at the DMV. We're a small operation and we'd like to keep it that way —
 every session gets our real attention.
+
+</div>
