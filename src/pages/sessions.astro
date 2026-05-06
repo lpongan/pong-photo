@@ -1,0 +1,79 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Sessions" description="Portrait and action sessions for kids who have a whole identity. We come to you — no studio, no formula.">
+  <div class="flex flex-col gap-12 max-w-2xl">
+
+    <div class="flex flex-col gap-4">
+      <h1 class="font-overpass-mono uppercase tracking-widest text-sm">Sessions</h1>
+      <p class="text-2xl leading-snug">Photos that actually look like your kid.</p>
+      <p class="opacity-70 leading-relaxed">Not posed. Not generic. We show up where they're already doing their thing — the skatepark, the trail, the basement practice space — and make photos that couldn't be of anyone else.</p>
+      <p class="opacity-70 leading-relaxed">Right now we're actively building our portfolio, which means sessions are free or heavily discounted in exchange for permission to use the photos in our work. There's no catch — you get the images, we get to keep shooting the things we love.</p>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <h2 class="font-overpass-mono uppercase tracking-widest text-sm">How it works</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-2 border border-current border-opacity-10 p-5">
+          <span class="font-overpass-mono text-xs opacity-40">01</span>
+          <p class="font-overpass-mono text-sm">Tell us about them</p>
+          <p class="text-sm opacity-60 leading-relaxed">What are they into? Where do they spend their time? The more specific, the better. "My kid does balisong" is a great start.</p>
+        </div>
+        <div class="flex flex-col gap-2 border border-current border-opacity-10 p-5">
+          <span class="font-overpass-mono text-xs opacity-40">02</span>
+          <p class="font-overpass-mono text-sm">We figure out a location</p>
+          <p class="text-sm opacity-60 leading-relaxed">We come to you — their spot, their turf. Somewhere they already feel comfortable, not a studio they've never been to.</p>
+        </div>
+        <div class="flex flex-col gap-2 border border-current border-opacity-10 p-5">
+          <span class="font-overpass-mono text-xs opacity-40">03</span>
+          <p class="font-overpass-mono text-sm">We shoot</p>
+          <p class="text-sm opacity-60 leading-relaxed">Sessions usually run 60–90 minutes. We spend the first part just hanging out. The best photos happen once everyone forgets the camera is there.</p>
+        </div>
+        <div class="flex flex-col gap-2 border border-current border-opacity-10 p-5">
+          <span class="font-overpass-mono text-xs opacity-40">04</span>
+          <p class="font-overpass-mono text-sm">You get the photos</p>
+          <p class="text-sm opacity-60 leading-relaxed">Edited images delivered within two weeks. Yours to keep, print, share — whatever you want.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <h2 class="font-overpass-mono uppercase tracking-widest text-sm">What we know</h2>
+      <p class="opacity-70 leading-relaxed">We're not parachuting in. These are scenes we're already part of or have spent real time in.</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        {[
+          { label: "Mountain biking", sub: "trail and park" },
+          { label: "Climbing", sub: "gym and outdoor" },
+          { label: "Skateboarding", sub: "street and park" },
+          { label: "Balisong", sub: "trick and flow" },
+          { label: "Cosplay", sub: "character work" },
+          { label: "Flow arts", sub: "poi, staff, fire" },
+          { label: "Aerial arts", sub: "silks, hoop, rope" },
+          { label: "Slacklining", sub: "highline and trick" },
+          { label: "Whitewater", sub: "kayak and raft" },
+        ].map(({ label, sub }) => (
+          <div class="flex flex-col gap-1 border border-current border-opacity-10 p-4">
+            <span class="font-overpass-mono text-xs">{label}</span>
+            <span class="font-overpass-mono text-xs opacity-40">{sub}</span>
+          </div>
+        ))}
+      </div>
+      <p class="opacity-70 leading-relaxed">If your kid is into something not on this list, reach out anyway. Niche is kind of our thing.</p>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <h2 class="font-overpass-mono uppercase tracking-widest text-sm">For parents</h2>
+      <p class="opacity-70 leading-relaxed">We shoot minors with a parent or guardian present, always. We'll ask you to sign a simple release form before we share any photos publicly.</p>
+    </div>
+
+    <div class="flex flex-col gap-4 border border-current border-opacity-10 p-8">
+      <p class="text-xl leading-snug">Ready to set something up?</p>
+      <p class="opacity-70 leading-relaxed">Tell us a little about who you'd like photographed and what they're into. That's all we need to get started.</p>
+      <a href="/contact" class="font-overpass-mono uppercase tracking-widest text-sm border border-current border-opacity-30 px-6 py-3 self-start hover:border-opacity-70 transition-all">
+        Get in touch →
+      </a>
+    </div>
+
+  </div>
+</BaseLayout>

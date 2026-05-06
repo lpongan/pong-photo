@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+    title="Contact"
+    description="Get in touch to set up a session. Tell us what your subject is into and we'll take it from there."
+>
+    <div class="flex flex-col gap-10 max-w-xl">
+        <div class="flex flex-col gap-4">
+            <h1 class="font-overpass-mono uppercase tracking-widest text-sm">
+                Contact
+            </h1>
+            <p class="text-2xl leading-snug">Let's talk.</p>
+            <p class="opacity-70 leading-relaxed">
+                Tell us a little about who you'd like photographed and what
+                they're into. That's all we need to get started.
+            </p>
+        </div>
+
+        <form id="contact-form" class="flex flex-col gap-6">
+            <!-- all your existing fields unchanged -->
+
+            <button
+                type="submit"
+                id="submit-btn"
+                class="font-overpass-mono uppercase tracking-widest text-sm border border-current border-opacity-30 px-6 py-3 self-start hover:border-opacity-70 transition-all"
+            >
+                Send it →
+            </button>
+
+            <p
+                id="form-status"
+                class="font-overpass-mono text-xs opacity-60 leading-relaxed hidden"
+            >
+            </p>
+            <p class="font-overpass-mono text-xs opacity-40 leading-relaxed">
+                We respond within a couple of days. No sales pitch on the other
+                end — just a conversation about whether it's a good fit.
+            </p>
+        </form>
+
+        <script>
+            const form = document.getElementById(
+                "contact-form",
+            ) as HTMLFormElement;
+            const btn = document.getElementById(
+                "submit-btn",
+            ) as HTMLButtonElement;
+            const status = document.getElementById(
+                "form-status",
+            ) as HTMLParagraphElement;
+
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                btn.textContent = "Sending...";
+                btn.setAttribute("disabled", "true");
+                status.classList.add("hidden");
+
+                try {
+                    const res = await fetch("/api/contact", {
+                        method: "POST",
+                        body: new FormData(form),
+                    });
+                    const data = await res.json();
+
+                    if (res.ok) {
+                        form.reset();
+                        status.textContent =
+                            "Got it — we'll be in touch within a couple of days.";
+                    } else {
+                        status.textContent =
+                            data.error ??
+                            "Something went wrong. Please try again.";
+                    }
+                } catch {
+                    status.textContent =
+                        "Something went wrong. Please try again.";
+                } finally {
+                    status.classList.remove("hidden");
+                    btn.textContent = "Send it →";
+                    btn.removeAttribute("disabled");
+                }
+            });
+        </script>
+    </div>
+</BaseLayout>
