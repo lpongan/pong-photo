@@ -3,11 +3,17 @@ interface Env {
   MAILCHANNELS_API_KEY?: string;
 }
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const headers = {
-    "Access-Control-Allow-Origin": "https://pong-photo.pages.dev",
+function getCorsHeaders(request: Request) {
+  const origin = request.headers.get("Origin") ?? "";
+  const allowed = origin.endsWith(".pages.dev") || origin === "https://pong-photo.pages.dev";
+  return {
+    "Access-Control-Allow-Origin": allowed ? origin : "https://pong-photo.pages.dev",
     "Content-Type": "application/json",
   };
+}
+
+export const onRequestPost: PagesFunction<Env> = async (context) => {
+  const headers = getCorsHeaders(context.request);
 
   try {
     const formData = await context.request.formData();
@@ -52,10 +58,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 };
 
-export const onRequestOptions: PagesFunction = async () => {
+export const onRequestOptions: PagesFunction = async (context) => {
+  const origin = context.request.headers.get("Origin") ?? "";
+  const allowed = origin.endsWith(".pages.dev") || origin === "https://pong-photo.pages.dev";
   return new Response(null, {
     headers: {
-      "Access-Control-Allow-Origin": "https://pong-photo.pages.dev",
+      "Access-Control-Allow-Origin": allowed ? origin : "https://pong-photo.pages.dev",
       "Access-Control-Allow-Methods": "POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
     },
