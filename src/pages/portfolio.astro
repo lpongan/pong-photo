@@ -62,5 +62,41 @@ const families: PortfolioImage[] = [
           </p>
         )
     }
+
+    <div class="pt-8 border-t border-current opacity-100" style="border-opacity: 0.1;">
+      <div class="flex flex-col gap-4">
+        <button
+          id="book-cta"
+          class="font-overpass-mono uppercase tracking-widest text-sm border border-current px-6 py-3 self-start hover:opacity-70 transition-all"
+          style="border-opacity: 0.3;"
+        >
+          Book Now →
+        </button>
+        <div id="book-reveal" class="overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
+          <div class="flex flex-col gap-2 pb-2">
+            <p class="font-overpass-mono uppercase tracking-widest text-xs opacity-60">Call or text</p>
+            <a href="tel:+13039216103" class="text-2xl leading-snug hover:opacity-70 transition-opacity">
+              (303) 921-6103
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <script>
+    const btn = document.getElementById("book-cta") as HTMLButtonElement;
+    const reveal = document.getElementById("book-reveal") as HTMLDivElement;
+
+    btn.addEventListener("click", () => {
+      const isOpen = reveal.style.maxHeight !== "0px" && reveal.style.maxHeight !== "";
+      if (isOpen) {
+        reveal.style.maxHeight = "0";
+        btn.textContent = "Book Now →";
+      } else {
+        reveal.style.maxHeight = reveal.scrollHeight + "px";
+        btn.textContent = "Close ×";
+      }
+    });
+  </script>
 </BaseLayout>
