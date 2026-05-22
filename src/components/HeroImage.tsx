@@ -19,8 +19,8 @@ import { useEffect, useRef, useState } from "react";
 interface HeroImageProps {
   title: string;
   tags: string[];
-  backgroundImage: string;
-  mobileBackgroundImage: string;
+  src: string;
+  srcset?: string;
   positionX?: string;
   positionY?: string;
   alt: string;
@@ -30,8 +30,8 @@ interface HeroImageProps {
 export default function HeroImage({
   title,
   tags,
-  backgroundImage,
-  mobileBackgroundImage,
+  src,
+  srcset,
   positionX = "30%",
   positionY = "50%",
   alt,
@@ -131,25 +131,24 @@ export default function HeroImage({
       data-pagefind-body
     >
       <div ref={parallaxRef} className="absolute inset-0">
-        <picture>
-          <source media="(min-width: 1200px)" srcSet={backgroundImage} />
-          <img
-            ref={imgRef}
-            src={mobileBackgroundImage}
-            alt={alt}
-            fetchPriority="high"
-            decoding="sync"
-            onLoad={() => setImageLoaded(true)}
-            className={`absolute left-0 right-0 w-full object-cover transition-opacity duration-700 ${
-              imageLoaded ? "opacity-100" : "opacity-0"
-            }`}
-            style={{
-              objectPosition,
-              top: "-20%",
-              height: "120%",
-            }}
-          />
-        </picture>
+        <img
+          ref={imgRef}
+          src={src}
+          srcSet={srcset}
+          sizes="100vw"
+          alt={alt}
+          fetchPriority="high"
+          decoding="sync"
+          onLoad={() => setImageLoaded(true)}
+          className={`absolute left-0 right-0 w-full object-cover transition-opacity duration-700 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          style={{
+            objectPosition,
+            top: "-20%",
+            height: "120%",
+          }}
+        />
       </div>
       {/* Subtle gradient overlay for text legibility */}
       <div

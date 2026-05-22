@@ -1,6 +1,7 @@
 ---
 import "../styles/MasonryLayout.css";
 import "../styles/lightbox.css";
+import { getImage } from "astro:assets";
 
 export interface PortfolioImage {
   src: string;
@@ -14,11 +15,30 @@ interface Props {
 }
 
 const { images } = Astro.props;
+
+const WIDTHS = [800, 1200, 1900, 2500];
+const SIZES = "(max-width: 480px) 50vw, (max-width: 800px) 33vw, 25vw";
+
+const optimized = await Promise.all(
+  images.map((image) =>
+    getImage({
+      src: image.src,
+      widths: WIDTHS,
+      width: 2500,
+      height: 1667,
+      fit: "inside",
+      quality: 85,
+      loading: "lazy",
+      decoding: "async",
+    })
+  )
+);
 ---
 
 <div class="masonry not-prose">
   {
-    images.map((image) => {
+    images.map((image, i) => {
+      const asset = optimized[i]!;
       const posStyle =
         image.positionx || image.positiony
           ? `object-position: ${image.positionx ?? "center"} ${image.positiony ?? "center"}`
@@ -27,7 +47,9 @@ const { images } = Astro.props;
         <div class="image-container gallery">
           <a href={image.src} class="image-link lightbox-link">
             <img
-              src={image.src}
+              src={asset.src}
+              srcset={asset.srcSet.attribute}
+              sizes={SIZES}
               alt={image.alt}
               loading="lazy"
               decoding="async"

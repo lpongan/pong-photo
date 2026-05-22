@@ -36,33 +36,17 @@ const positionx = frontmatter?.image?.positionx;
 const positiony = frontmatter?.image?.positiony;
 const baseUrl = new URL(Astro.request.url).origin;
 
-const backgroundImage = image
+const heroImage = image
   ? await getImage({
       src: image,
       alt: alt,
+      widths: [800, 1200, 1900, 2500, 3840],
       width: 3840,
       height: 2160,
       fit: "inside",
-      format: "avif",
       quality: 85,
       loading: "eager",
       decoding: "sync",
-      fetchpriority: "high",
-    })
-  : null;
-
-const mobileBackgroundImage = image
-  ? await getImage({
-      src: image,
-      alt: alt,
-      width: 1920,
-      height: 1080,
-      fit: "inside",
-      format: "avif",
-      quality: 85,
-      loading: "eager",
-      decoding: "sync",
-      fetchpriority: "high",
     })
   : null;
 
@@ -96,8 +80,8 @@ const metaImage = image
         client:load
         title={title}
         tags={frontmatter.tags}
-        backgroundImage={backgroundImage!.src}
-        mobileBackgroundImage={mobileBackgroundImage!.src}
+        src={heroImage!.src}
+        srcset={heroImage!.srcSet.attribute}
         positionX={positionx}
         positionY={positiony}
         alt={alt ?? ""}
