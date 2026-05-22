@@ -22,11 +22,10 @@ async function optimizeImage(src: string, alt: string) {
   return await getImage({
     src,
     alt,
-    // layout: "responsive",
+    widths: [320, 640, 1200],
     width: 640,
     height: 360,
     fit: "inside",
-    format: "avif",
     quality: 65,
     decoding: "async",
   });
@@ -45,6 +44,7 @@ const postsData = await Promise.all(
       title: post.data.title,
       description: post.data.description,
       image: imageData ? imageData.src : null,
+      imageSrcset: imageData ? imageData.srcSet.attribute : null,
       alt: post.data.image?.alt || post.data.title,
     };
   }),
@@ -118,6 +118,7 @@ const favicon = await optimizeImage(CDN_FAVICON_URL, "favicon");
     title: string;
     description: string;
     image: string | null;
+    imageSrcset: string | null;
     alt: string;
   }
 
@@ -145,6 +146,8 @@ const favicon = await optimizeImage(CDN_FAVICON_URL, "favicon");
         const img = element.querySelector("img");
         if (img) {
           img.src = post.image || favicon.src;
+          img.srcset = post.imageSrcset ?? "";
+          img.sizes = post.imageSrcset ? "(min-width: 800px) 33vw, 100vw" : "";
           img.alt = post.alt;
           img.className = post.image
             ? "w-full h-full object-cover transition-all duration-300 group-hover:opacity-90"

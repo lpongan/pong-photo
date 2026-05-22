@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /home/lpong/code/pong-photo/src/services)"
+    ],
+    "additionalDirectories": [
+      "\\home\\lpong\\code\\pong-photo\\src"
+    ]
+  }
+}

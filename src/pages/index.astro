@@ -3,12 +3,11 @@ import Homepage from "../components/Homepage.astro";
 import { getImage } from "astro:assets";
 
 const hero = await getImage({
-  src: "/images/DSC08239.jpg",
-  widths: [854, 1280, 1920],
-  width: 1920,
-  height: 1080,
+  src: "https://res.cloudinary.com/dvwl2ci5j/image/upload/v1778034719/DSC08239_sntktm.jpg",
+  widths: [800, 1200, 1900, 2500],
+  width: 2500,
+  height: 1667,
   fit: "inside",
-  format: "webp",
   quality: 85,
   decoding: "async",
 });

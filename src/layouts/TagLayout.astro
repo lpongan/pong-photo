@@ -22,11 +22,10 @@ async function getOptimizedImage(src: string, alt: string) {
   const result = await getImage({
     src,
     alt,
-    widths: [854, 1280, 1920],
-    width: 1920,
-    height: 1080,
+    widths: [800, 1200, 1900, 2500],
+    width: 2500,
+    height: 1667,
     fit: "inside",
-    format: "avif",
     quality: 85,
     decoding: "async",
   });

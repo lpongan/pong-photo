@@ -47,10 +47,11 @@ const publishedDate = `${pdDatePart} ${pdHours}:${pdMinutes}:${pdSeconds}.${pdMs
           <Image
             src={image}
             alt={alt}
+            widths={[400, 640, 1200]}
             width={640}
             height={480}
+            sizes="(min-width: 800px) 33vw, 100vw"
             decoding="async"
-            format="avif"
             quality={90}
             class="h-full object-cover object-center post-image"
             style={`--position-x: ${positionx}; --position-y: ${positiony}; height: 100%`}

@@ -24,17 +24,21 @@ export interface Props {
 }
 
 const { images } = Astro.props;
+const WIDTHS = [800, 1200, 1900, 2500];
+const SIZES = "(max-width: 480px) 50vw, (max-width: 800px) 33vw, 25vw";
+
 const imageAssets = await Promise.all(
   images.map(async (image) => {
     if (image) {
       return await getImage({
         src: image.src,
         alt: image.alt,
-        width: 1920,
-        height: 1080,
+        widths: WIDTHS,
+        width: 2500,
+        height: 1667,
         fit: "inside",
+        quality: 85,
         decoding: "async",
-        format: "avif",
         loading: "lazy",
       });
     }
@@ -57,6 +61,8 @@ const imageAssets = await Promise.all(
           <a href={image.src} class="image-link lightbox-link">
             <img
               src={imageAsset.src}
+              srcset={imageAsset.srcSet.attribute}
+              sizes={SIZES}
               alt={imageAsset.attributes.alt}
               loading={imageAsset.attributes.loading}
               decoding={imageAsset.attributes.decoding}

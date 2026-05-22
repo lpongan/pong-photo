@@ -10,11 +10,6 @@ import { remarkReadingTime } from "./src/scripts/remark-reading-time.mjs";
 import undiciRetry from "./src/scripts/undici-retry.ts";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
-import hqService from "@erfianugrah/astro-image-hq";
-// Use no-op passthrough image service in dev to skip Sharp processing.
-// Images are served as-is during development; full optimization runs in production builds.
-const isDev =
-  process.env.NODE_ENV !== "production" && !process.argv.includes("build");
 
 // https://astro.build/config
 export default defineConfig({
@@ -25,17 +20,8 @@ export default defineConfig({
   base: process.env.GITHUB_PAGES === "true" ? "/revista-3" : undefined,
 
   image: {
-    domains: ["erfianugrah.com", "image.erfi.io"],
-    service: isDev
-      ? { entrypoint: "astro/assets/services/noop" }
-      : hqService({
-          // Photography profile: HQ encoding + content-aware shadow boost.
-          // Falls back to sharp if avifenc unavailable (with a warning).
-          // See MEDIA_ENCODER.md for design rationale.
-          profile: "photo",
-          gpu: { maxMemoryUtilization: 0.5 },
-          log: "summary",
-        }),
+    domains: ["res.cloudinary.com"],
+    service: { entrypoint: "./src/services/cloudinary.ts" },
   },
 
   integrations: [
