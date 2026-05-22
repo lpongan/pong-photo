@@ -13,11 +13,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site:
-    process.env.GITHUB_PAGES === "true"
-      ? "https://erfianugrah.github.io"
-      : "https://www.erfianugrah.com",
-  base: process.env.GITHUB_PAGES === "true" ? "/revista-3" : undefined,
+  site: "https://www.getponged.com",
 
   image: {
     domains: ["res.cloudinary.com"],
