@@ -127,9 +127,9 @@ const formattedUpdatedDate = updatedDate
     <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
     <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', GA_MEASUREMENT_ID);
+      window.gtag = function(){window.dataLayer.push(arguments);}
+      window.gtag('js', new Date());
+      window.gtag('config', GA_MEASUREMENT_ID);
     </script>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href={favicon_webp.src} />
